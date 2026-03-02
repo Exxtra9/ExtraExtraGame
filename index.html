@@ -15,9 +15,7 @@
       --muted: #7a6e5f;
       --border: #2a1f14;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'IBM Plex Sans', sans-serif;
       background: var(--paper);
@@ -25,8 +23,6 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-
-    /* Newspaper texture */
     body::before {
       content: '';
       position: fixed;
@@ -35,593 +31,354 @@
       pointer-events: none;
       z-index: 0;
     }
+    .container { max-width: 480px; margin: 0 auto; padding: 0 16px 80px; position: relative; z-index: 1; }
 
-    .container {
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 0 16px 80px;
-      position: relative;
-      z-index: 1;
+    /* ── SETUP SCREEN ── */
+    #setupScreen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--paper);
+      z-index: 200;
+      overflow-y: auto;
+      padding: 0 0 40px;
     }
-
-    /* MASTHEAD */
-    .masthead {
-      text-align: center;
-      border-bottom: 4px double var(--border);
-      padding: 20px 0 12px;
-      margin-bottom: 0;
-    }
-
-    .masthead-eyebrow {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .masthead h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 42px;
-      font-weight: 900;
-      letter-spacing: -1px;
-      line-height: 1;
-      color: var(--ink);
-    }
-
-    .masthead h1 span {
-      color: var(--accent);
-    }
-
-    .masthead-sub {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 2px;
-      color: var(--muted);
-      margin-top: 6px;
-      border-top: 1px solid var(--border);
-      padding-top: 6px;
-    }
-
-    /* SCORE BANNER */
-    .score-banner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    #setupScreen.visible { display: block; }
+    .setup-masthead {
       background: var(--ink);
       color: var(--paper);
-      padding: 8px 16px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 1px;
-    }
-
-    .score-banner .pts { color: var(--gold); font-weight: 700; font-size: 14px; }
-    .score-banner .streak { color: #ff6b6b; }
-
-    /* ARTICLE CARD */
-    .article-card {
-      border: 2px solid var(--border);
-      margin-top: 16px;
-      background: var(--cream);
-    }
-
-    .article-label {
-      background: var(--ink);
-      color: var(--gold);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      padding: 5px 12px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .article-body {
-      padding: 14px;
-    }
-
-    .real-headline {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 1.3;
-      color: var(--ink);
-      margin-bottom: 10px;
-      display: none;
-    }
-
-    .real-headline.visible { display: block; }
-
-    .article-synopsis {
-      font-size: 13px;
-      line-height: 1.6;
-      color: #3a3025;
-      border-top: 1px solid #ccc5b5;
-      padding-top: 10px;
-      margin-top: 10px;
-    }
-
-    .article-source {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      color: var(--muted);
-      margin-top: 8px;
-      letter-spacing: 1px;
-    }
-
-    /* INPUT AREA */
-    .input-section {
-      margin-top: 16px;
-    }
-
-    .input-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 6px;
-      display: block;
-    }
-
-    textarea {
-      width: 100%;
-      border: 2px solid var(--border);
-      background: white;
-      font-family: 'Playfair Display', serif;
-      font-size: 16px;
-      padding: 12px;
-      resize: none;
-      outline: none;
-      color: var(--ink);
-      min-height: 90px;
-      line-height: 1.4;
-      transition: border-color 0.2s;
-    }
-
-    textarea:focus {
-      border-color: var(--accent);
-    }
-
-    textarea::placeholder {
-      color: #b5aa9a;
-      font-style: italic;
-      font-size: 14px;
-    }
-
-    .char-count {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      color: var(--muted);
-      text-align: right;
-      margin-top: 4px;
-    }
-
-    .char-count.warn { color: var(--accent); }
-
-    .submit-btn {
-      width: 100%;
-      background: var(--ink);
-      color: var(--paper);
-      border: none;
-      padding: 14px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: background 0.2s, transform 0.1s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .submit-btn:active { transform: scale(0.98); }
-    .submit-btn:hover:not(:disabled) { background: var(--accent); }
-    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .submit-btn .btn-inner {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    /* LOADING */
-    .loading-state {
-      display: none;
       text-align: center;
-      padding: 24px;
-      border: 2px solid var(--border);
-      margin-top: 16px;
-      background: var(--cream);
+      padding: 24px 16px 20px;
     }
-
-    .loading-state.visible { display: block; }
-
-    .press-anim {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 2px;
-      color: var(--muted);
-      margin-top: 8px;
-    }
-
-    .spinner {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      border: 3px solid var(--cream);
-      border-top-color: var(--ink);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* RESULT CARD */
-    .result-card {
-      display: none;
-      border: 3px solid var(--border);
-      margin-top: 16px;
-      background: white;
-      animation: slideUp 0.4s ease;
-    }
-
-    .result-card.visible { display: block; }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .result-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 14px;
-      border-bottom: 2px solid var(--border);
-    }
-
-    .rank-badge {
-      font-size: 32px;
-      line-height: 1;
-    }
-
-    .rank-info h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      font-weight: 900;
-    }
-
-    .rank-info .rank-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 2px;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    .score-display {
-      margin-left: auto;
-      text-align: right;
-    }
-
-    .score-display .big-score {
+    .setup-masthead h1 {
       font-family: 'Playfair Display', serif;
       font-size: 36px;
       font-weight: 900;
-      line-height: 1;
-      color: var(--accent);
+      letter-spacing: -1px;
     }
-
-    .score-display .score-label {
+    .setup-masthead h1 span { color: var(--gold); }
+    .setup-masthead p {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      color: var(--muted);
-      letter-spacing: 1px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #aaa;
+      margin-top: 6px;
     }
-
-    .breakdown {
-      padding: 12px 14px;
-      border-bottom: 1px solid #ddd;
+    .setup-body { padding: 20px 16px; max-width: 480px; margin: 0 auto; }
+    .setup-step {
+      border: 2px solid var(--border);
+      margin-bottom: 16px;
+      background: white;
     }
-
-    .breakdown h3 {
+    .setup-step-header {
+      background: var(--ink);
+      color: var(--gold);
       font-family: 'IBM Plex Mono', monospace;
       font-size: 9px;
       letter-spacing: 3px;
+      padding: 6px 12px;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 10px;
     }
-
-    .metric {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .metric-name {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 1px;
-      width: 80px;
-      flex-shrink: 0;
-      color: var(--ink);
-    }
-
-    .metric-bar {
-      flex: 1;
-      height: 6px;
-      background: var(--cream);
-      border: 1px solid #ccc;
-      border-radius: 0;
-      overflow: hidden;
-    }
-
-    .metric-fill {
-      height: 100%;
-      background: var(--ink);
-      transition: width 1s ease;
-    }
-
-    .metric-fill.high { background: #2ecc71; }
-    .metric-fill.med { background: var(--gold); }
-    .metric-fill.low { background: var(--accent); }
-
-    .metric-val {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      width: 30px;
-      text-align: right;
-    }
-
-    .verdict {
-      padding: 12px 14px;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .verdict p {
+    .setup-step-body { padding: 14px; }
+    .setup-step-body p {
       font-size: 13px;
       line-height: 1.6;
       color: #3a3025;
-      font-style: italic;
+      margin-bottom: 10px;
     }
-
-    .original-headline-reveal {
-      padding: 12px 14px;
-      background: var(--cream);
-      border-bottom: 1px solid #ddd;
-    }
-
-    .original-headline-reveal h3 {
+    .setup-step-body a {
+      color: var(--accent);
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+    .setup-input {
+      width: 100%;
+      border: 2px solid var(--border);
+      background: var(--cream);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      padding: 10px;
+      outline: none;
+      color: var(--ink);
+      margin-top: 8px;
+    }
+    .setup-input:focus { border-color: var(--accent); background: white; }
+    .setup-input::placeholder { color: #aaa; }
+    .setup-save-btn {
+      width: 100%;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
       letter-spacing: 3px;
       text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: opacity 0.2s;
+    }
+    .setup-save-btn:hover { opacity: 0.85; }
+    .setup-save-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .setup-note {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1px;
       color: var(--muted);
-      margin-bottom: 6px;
+      text-align: center;
+      margin-top: 12px;
+      line-height: 1.6;
     }
-
-    .original-headline-reveal p {
-      font-family: 'Playfair Display', serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--ink);
-      line-height: 1.3;
+    .setup-error {
+      background: #fee;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      padding: 8px 10px;
+      margin-top: 8px;
+      display: none;
     }
+    .setup-error.visible { display: block; }
 
-    .action-row {
-      display: flex;
-      gap: 8px;
-      padding: 12px 14px;
-    }
-
-    .next-btn {
-      flex: 1;
+    /* ── SETTINGS COG ── */
+    .settings-btn {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
       background: var(--ink);
       color: var(--paper);
       border: none;
-      padding: 12px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 2px;
+      border-radius: 50%;
+      font-size: 18px;
       cursor: pointer;
-      text-transform: uppercase;
-      transition: background 0.2s;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
-    .next-btn:hover { background: var(--accent); }
+    /* ── MASTHEAD ── */
+    .masthead { text-align: center; border-bottom: 4px double var(--border); padding: 20px 0 12px; }
+    .masthead-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .masthead h1 { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 900; letter-spacing: -1px; line-height: 1; color: var(--ink); }
+    .masthead h1 span { color: var(--accent); }
+    .masthead-sub { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--muted); margin-top: 6px; border-top: 1px solid var(--border); padding-top: 6px; }
 
-    .share-btn {
-      background: transparent;
-      border: 2px solid var(--border);
-      color: var(--ink);
-      padding: 12px 16px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
+    /* ── SCORE BANNER ── */
+    .score-banner { display: flex; justify-content: space-between; align-items: center; background: var(--ink); color: var(--paper); padding: 8px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1px; }
+    .score-banner .pts { color: var(--gold); font-weight: 700; font-size: 14px; }
+    .score-banner .streak { color: #ff6b6b; }
 
+    /* ── ARTICLE CARD ── */
+    .article-card { border: 2px solid var(--border); margin-top: 16px; background: var(--cream); }
+    .article-label { background: var(--ink); color: var(--gold); font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; padding: 5px 12px; display: flex; justify-content: space-between; align-items: center; }
+    .live-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #2ecc71; margin-right: 5px; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .article-body { padding: 14px; }
+    .real-headline { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; line-height: 1.3; color: var(--ink); margin-bottom: 10px; display: none; }
+    .real-headline.visible { display: block; }
+    .article-synopsis { font-size: 13px; line-height: 1.6; color: #3a3025; border-top: 1px solid #ccc5b5; padding-top: 10px; margin-top: 10px; }
+    .article-source { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); margin-top: 8px; letter-spacing: 1px; }
+    .article-link { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--accent); text-decoration: none; display: inline-block; margin-top: 4px; letter-spacing: 1px; }
+    .article-link:hover { text-decoration: underline; }
+    .daily-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--gold); color: var(--ink); font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 1px; padding: 2px 6px; text-transform: uppercase; margin-bottom: 8px; }
+
+    /* ── SKELETON ── */
+    .skeleton { background: linear-gradient(90deg, #ddd8cc 25%, #e8e3d8 50%, #ddd8cc 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 2px; display: block; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .skeleton-line { height: 13px; margin-bottom: 8px; }
+
+    /* ── ALREADY PLAYED ── */
+    .played-today { display: none; background: #f0f8f0; border: 2px solid #2ecc71; padding: 10px 14px; margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1px; color: #1a5c2a; }
+    .played-today.visible { display: block; }
+
+    /* ── INPUT ── */
+    .input-section { margin-top: 16px; }
+    .input-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; display: block; }
+    textarea { width: 100%; border: 2px solid var(--border); background: white; font-family: 'Playfair Display', serif; font-size: 16px; padding: 12px; resize: none; outline: none; color: var(--ink); min-height: 90px; line-height: 1.4; transition: border-color 0.2s; }
+    textarea:focus { border-color: var(--accent); }
+    textarea::placeholder { color: #b5aa9a; font-style: italic; font-size: 14px; }
+    .char-count { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); text-align: right; margin-top: 4px; }
+    .char-count.warn { color: var(--accent); }
+    .submit-btn { width: 100%; background: var(--ink); color: var(--paper); border: none; padding: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; margin-top: 10px; transition: background 0.2s, transform 0.1s; }
+    .submit-btn:active { transform: scale(0.98); }
+    .submit-btn:hover:not(:disabled) { background: var(--accent); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-inner { display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+    /* ── LOADING ── */
+    .loading-state { display: none; text-align: center; padding: 24px; border: 2px solid var(--border); margin-top: 16px; background: var(--cream); }
+    .loading-state.visible { display: block; }
+    .press-anim { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--muted); margin-top: 8px; }
+    .spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid var(--cream); border-top-color: var(--ink); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── RESULT CARD ── */
+    .result-card { display: none; border: 3px solid var(--border); margin-top: 16px; background: white; animation: slideUp 0.4s ease; }
+    .result-card.visible { display: block; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .result-header { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 2px solid var(--border); }
+    .rank-badge { font-size: 32px; line-height: 1; }
+    .rank-info h2 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+    .rank-info .rank-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+    .score-display { margin-left: auto; text-align: right; }
+    .score-display .big-score { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; line-height: 1; color: var(--accent); }
+    .score-display .score-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; }
+    .breakdown { padding: 12px 14px; border-bottom: 1px solid #ddd; }
+    .breakdown h3 { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .metric { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .metric-name { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1px; width: 80px; flex-shrink: 0; }
+    .metric-bar { flex: 1; height: 6px; background: var(--cream); border: 1px solid #ccc; overflow: hidden; }
+    .metric-fill { height: 100%; background: var(--ink); transition: width 1s ease; }
+    .metric-fill.high { background: #2ecc71; }
+    .metric-fill.med  { background: var(--gold); }
+    .metric-fill.low  { background: var(--accent); }
+    .metric-val { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; width: 30px; text-align: right; }
+    .verdict { padding: 12px 14px; border-bottom: 1px solid #ddd; }
+    .verdict p { font-size: 13px; line-height: 1.6; color: #3a3025; font-style: italic; }
+    .original-headline-reveal { padding: 12px 14px; background: var(--cream); border-bottom: 1px solid #ddd; }
+    .original-headline-reveal h3 { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .original-headline-reveal p { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+    .comeback-msg { padding: 10px 14px; background: #fff8e6; border-bottom: 1px solid #ddd; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1px; color: #7a6000; text-align: center; }
+    .action-row { display: flex; gap: 8px; padding: 12px 14px; }
+    .share-btn { background: transparent; border: 2px solid var(--border); color: var(--ink); padding: 12px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; cursor: pointer; transition: background 0.2s; flex: 1; }
     .share-btn:hover { background: var(--cream); }
 
-    /* LEADERBOARD / HISTORY */
-    .history-section {
-      margin-top: 20px;
-      border: 2px solid var(--border);
-    }
-
-    .history-header {
-      background: var(--ink);
-      color: var(--gold);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      padding: 6px 12px;
-    }
-
-    .history-item {
-      display: flex;
-      align-items: center;
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--cream);
-      gap: 8px;
-    }
-
+    /* ── HISTORY ── */
+    .history-section { margin-top: 20px; border: 2px solid var(--border); }
+    .history-header { background: var(--ink); color: var(--gold); font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; padding: 6px 12px; }
+    .history-item { display: flex; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--cream); gap: 8px; }
     .history-item:last-child { border-bottom: none; }
-
     .hist-rank { font-size: 18px; }
+    .hist-headline { flex: 1; font-family: 'Playfair Display', serif; font-size: 11px; color: var(--ink); line-height: 1.3; }
+    .hist-score { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 700; color: var(--accent); }
+    .empty-history { padding: 20px; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; }
 
-    .hist-headline {
-      flex: 1;
-      font-family: 'Playfair Display', serif;
-      font-size: 11px;
-      color: var(--ink);
-      line-height: 1.3;
-    }
-
-    .hist-score {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .empty-history {
-      padding: 20px;
-      text-align: center;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 2px;
-    }
-
-    /* ERROR */
-    .error-msg {
-      display: none;
-      background: #fee;
-      border: 2px solid var(--accent);
-      padding: 10px 14px;
-      margin-top: 10px;
-      font-size: 12px;
-      color: var(--accent);
-      font-family: 'IBM Plex Mono', monospace;
-    }
+    /* ── MISC ── */
+    .error-msg { display: none; background: #fee; border: 2px solid var(--accent); padding: 10px 14px; margin-top: 10px; font-size: 12px; color: var(--accent); font-family: 'IBM Plex Mono', monospace; }
     .error-msg.visible { display: block; }
-
-    /* Rule divider */
-    .rule {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 16px 0;
-      color: var(--muted);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    .rule::before, .rule::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* Rank tier colors */
-    .tier-scoop { color: #f59e0b; }
-    .tier-byline { color: #10b981; }
-    .tier-copy { color: #3b82f6; }
-    .tier-intern { color: var(--muted); }
-    .tier-editor { color: #8b5cf6; }
+    .rule { display: flex; align-items: center; gap: 8px; margin: 16px 0; color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
+    .rule::before, .rule::after { content: ''; flex: 1; height: 1px; background: var(--border); }
     .tier-pulitzer { color: var(--accent); }
-
-    .points-flash {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'Playfair Display', serif;
-      font-size: 64px;
-      font-weight: 900;
-      color: var(--gold);
-      pointer-events: none;
-      animation: flash 1.5s ease forwards;
-      z-index: 100;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-
-    @keyframes flash {
-      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-      30% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-      70% { opacity: 1; }
-      100% { opacity: 0; transform: translate(-50%, -60%); }
-    }
+    .tier-editor   { color: #8b5cf6; }
+    .tier-byline   { color: #10b981; }
+    .tier-copy     { color: #3b82f6; }
+    .tier-intern   { color: var(--muted); }
+    .points-flash { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 900; color: var(--gold); pointer-events: none; animation: flash 1.5s ease forwards; z-index: 100; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    @keyframes flash { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); } 30% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); } 70% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -60%); } }
+    .countdown { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1px; color: var(--muted); text-align: center; padding: 8px; border-top: 1px solid var(--cream); }
+    .countdown span { color: var(--ink); font-weight: 700; }
   </style>
 </head>
 <body>
+
+<!-- ══════════════════════════════════════
+     SETUP SCREEN (shown on first launch)
+══════════════════════════════════════ -->
+<div id="setupScreen">
+  <div class="setup-masthead">
+    <h1>EXTRA<span>EXTRA</span></h1>
+    <p>ONE-TIME SETUP · 2 FREE API KEYS NEEDED</p>
+  </div>
+  <div class="setup-body">
+
+    <div class="setup-step">
+      <div class="setup-step-header">Step 1 — Gemini API Key (Free)</div>
+      <div class="setup-step-body">
+        <p>Gemini powers the AI judging. It's completely free — no credit card needed.</p>
+        <p>1. Go to <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a><br>
+           2. Sign in with Google<br>
+           3. Tap <strong>"Get API Key"</strong> → <strong>"Create API key"</strong><br>
+           4. Copy and paste it below</p>
+        <input class="setup-input" id="inputGeminiKey" type="password" placeholder="AIza..." autocomplete="off" autocorrect="off" spellcheck="false" />
+      </div>
+    </div>
+
+    <div class="setup-step">
+      <div class="setup-step-header">Step 2 — Guardian API Key (Free)</div>
+      <div class="setup-step-body">
+        <p>The Guardian provides real daily news. Also completely free.</p>
+        <p>1. Go to <a href="https://open-platform.theguardian.com/access/" target="_blank">open-platform.theguardian.com</a><br>
+           2. Click <strong>"Register for access"</strong><br>
+           3. Check your email for the key<br>
+           4. Copy and paste it below</p>
+        <input class="setup-input" id="inputGuardianKey" type="password" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" autocomplete="off" autocorrect="off" spellcheck="false" />
+      </div>
+    </div>
+
+    <div id="setupError" class="setup-error"></div>
+    <button class="setup-save-btn" id="setupSaveBtn" onclick="saveKeys()">
+      START PLAYING →
+    </button>
+    <p class="setup-note">
+      🔒 Keys are saved only on this device in your browser.<br>
+      They are never sent anywhere except directly to Google and The Guardian.
+    </p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MAIN GAME
+══════════════════════════════════════ -->
 <div class="container">
 
-  <!-- MASTHEAD -->
   <div class="masthead">
     <div class="masthead-eyebrow">★ The Daily Challenge ★</div>
     <h1>EXTRA<span>EXTRA</span></h1>
-    <div class="masthead-sub">Vol. I &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; Beat the Editor</div>
+    <div class="masthead-sub" id="mastheadDate">Loading today's edition...</div>
   </div>
 
-  <!-- SCORE BANNER -->
   <div class="score-banner">
     <span>TOTAL: <span class="pts" id="totalScore">0</span> pts</span>
     <span>GAMES: <span id="gamesPlayed">0</span></span>
     <span class="streak">🔥 STREAK: <span id="streak">0</span></span>
   </div>
 
-  <!-- ARTICLE CARD -->
   <div class="article-card">
     <div class="article-label">
-      <span>📰 Breaking Story</span>
-      <span id="articleDate">Feb 28, 2026</span>
+      <span><span class="live-dot"></span>Today's Story</span>
+      <span id="articleDate">—</span>
     </div>
     <div class="article-body">
+      <div class="daily-badge" id="dailyBadge" style="display:none">📅 Daily Edition</div>
       <div class="real-headline" id="realHeadline"></div>
-      <div class="article-synopsis" id="synopsis">Loading today's story...</div>
-      <div class="article-source" id="articleSource">Source: NPR · Published: February 28, 2026</div>
+      <div id="skeletonLoader">
+        <span class="skeleton skeleton-line" style="width:100%"></span>
+        <span class="skeleton skeleton-line" style="width:92%"></span>
+        <span class="skeleton skeleton-line" style="width:85%"></span>
+        <span class="skeleton skeleton-line" style="width:70%"></span>
+      </div>
+      <div class="article-synopsis" id="synopsis" style="display:none"></div>
+      <div class="article-source" id="articleSource" style="display:none"></div>
+      <a class="article-link" id="articleLink" target="_blank" rel="noopener" style="display:none">Read full article ↗</a>
     </div>
   </div>
 
-  <!-- INPUT -->
-  <div class="input-section">
+  <div class="played-today" id="playedToday">
+    ✅ You already played today's edition! Come back tomorrow for a new story.
+    <div class="countdown" id="countdown"></div>
+  </div>
+
+  <div class="input-section" id="inputSection">
     <label class="input-label" for="headlineInput">✍️ Your Headline</label>
-    <textarea 
-      id="headlineInput" 
-      placeholder="Write a headline that captures the story... Be creative, punchy, and accurate."
-      maxlength="140"
-    ></textarea>
+    <textarea id="headlineInput" placeholder="Write a headline that captures the story... Be creative, punchy, and accurate." maxlength="140"></textarea>
     <div class="char-count" id="charCount">0 / 140</div>
     <button class="submit-btn" id="submitBtn" onclick="submitHeadline()">
-      <div class="btn-inner">
-        <span>🗞️</span>
-        <span>GO TO PRESS</span>
-      </div>
+      <div class="btn-inner"><span>🗞️</span><span>GO TO PRESS</span></div>
     </button>
     <div class="error-msg" id="errorMsg"></div>
   </div>
 
-  <!-- LOADING -->
   <div class="loading-state" id="loadingState">
     <div class="spinner"></div>
     <div class="press-anim" id="loadingText">THE EDITOR IS READING...</div>
   </div>
 
-  <!-- RESULT CARD -->
   <div class="result-card" id="resultCard">
     <div class="result-header">
       <div class="rank-badge" id="rankEmoji">🏆</div>
@@ -634,7 +391,6 @@
         <div class="score-label">POINTS</div>
       </div>
     </div>
-
     <div class="breakdown">
       <h3>Score Breakdown</h3>
       <div class="metric">
@@ -658,25 +414,19 @@
         <span class="metric-val" id="valOriginal">0</span>
       </div>
     </div>
-
-    <div class="verdict">
-      <p id="verdictText"></p>
-    </div>
-
+    <div class="verdict"><p id="verdictText"></p></div>
     <div class="original-headline-reveal">
       <h3>The Real Headline</h3>
       <p id="realHeadlineReveal"></p>
     </div>
-
+    <div class="comeback-msg">🗓️ A fresh story drops every day at midnight. Come back tomorrow!</div>
     <div class="action-row">
-      <button class="next-btn" onclick="nextRound()">Next Story →</button>
-      <button class="share-btn" onclick="shareScore()">Share 📤</button>
+      <button class="share-btn" onclick="shareScore()">Share My Score 📤</button>
     </div>
   </div>
 
-  <div class="rule">Your Sessions</div>
+  <div class="rule">Your History</div>
 
-  <!-- HISTORY -->
   <div class="history-section">
     <div class="history-header">📋 Recent Headlines</div>
     <div id="historyList">
@@ -686,295 +436,485 @@
 
 </div>
 
-<script>
-// ========== ARTICLES DATABASE ==========
-const ARTICLES = [
-  {
-    id: 'iran-strike',
-    date: 'Feb 28, 2026',
-    source: 'NPR / Al Jazeera',
-    synopsis: 'The United States and Israel launched a coordinated military operation against Iran on February 28, 2026, codenamed "Epic Fury" by the Pentagon and "Roaring Lion" by Israel. Iran confirmed that Supreme Leader Ayatollah Ali Khamenei, 86, was killed in the strikes. Iran responded with missile and drone attacks across the Gulf region, affecting Saudi Arabia, UAE, Qatar, Bahrain, and Kuwait. President Trump called for regime change, stating the goal was to "eliminate imminent threats." The UN Secretary-General condemned the strikes.',
-    realHeadline: "Iran's Supreme Leader Khamenei Killed in Joint U.S.-Israeli Strike; Region Braces for Escalation",
-    keywords: ['iran', 'strike', 'military', 'khamenei', 'israel', 'us', 'war', 'attack', 'missile', 'gulf']
-  },
-  {
-    id: 'grammys-2026',
-    date: 'Feb 3, 2026',
-    source: 'AP / Hollywood Reporter',
-    synopsis: 'At the 2026 Grammy Awards, Kendrick Lamar won five awards and surpassed Jay-Z as the most awarded hip-hop artist in Grammy history. In a historic first, Bad Bunny\'s album "Debí Tirar Más Fotos" became the first Spanish-language album to win Album of the Year. The K-pop song "Golden" from the film KPop Demon Hunters also made history by winning Best Song Written for Visual Media — the first K-pop track ever to win a Grammy.',
-    realHeadline: "Kendrick Lamar Makes History at Grammys; Bad Bunny's Spanish Album Wins Album of the Year",
-    keywords: ['grammy', 'kendrick', 'bad bunny', 'music', 'award', 'history', 'spanish', 'hip-hop', 'kpop', 'album']
-  },
-  {
-    id: 'washington-post',
-    date: 'Feb 2026',
-    source: 'BBC News',
-    synopsis: 'The Washington Post announced sweeping layoffs of approximately 300 journalists — roughly one-third of its total staff. The cuts primarily targeted reporters covering sports, local news, and international affairs, as part of a major restructuring effort under its current ownership.',
-    realHeadline: "Washington Post to Lay Off 300 Journalists, Slashing a Third of Its Newsroom",
-    keywords: ['washington post', 'layoffs', 'journalists', 'news', 'media', 'restructure', 'cuts', 'newspaper']
-  },
-  {
-    id: 'winter-olympics',
-    date: 'Feb 22, 2026',
-    source: 'World Economic Forum',
-    synopsis: 'The 2026 Winter Olympics concluded with a closing ceremony in Milano-Cortina, Italy. An economic study by Italian bank Banca Ifis estimated the Games generated over $6 billion in economic impact for host cities Milan and Cortina d\'Ampezzo, marking a significant boost to Italy\'s post-pandemic tourism and infrastructure.',
-    realHeadline: "Milano-Cortina Winter Olympics Close, Generating $6 Billion Economic Boost for Italy",
-    keywords: ['olympics', 'winter', 'milan', 'italy', 'sports', 'economic', 'games', 'cortina', 'closing']
-  }
-];
+<!-- Settings button to re-open setup -->
+<button class="settings-btn" onclick="openSetup()" title="API Settings">⚙️</button>
 
-// ========== STATE ==========
+<script>
+// ══════════════════════════════════════
+// KEY MANAGEMENT
+// ══════════════════════════════════════
+function getKeys() {
+  return {
+    gemini:   localStorage.getItem('ee_gemini_key')   || '',
+    guardian: localStorage.getItem('ee_guardian_key') || '',
+  };
+}
+
+function keysExist() {
+  const k = getKeys();
+  return k.gemini.length > 5 && k.guardian.length > 5;
+}
+
+function saveKeys() {
+  const gemini   = document.getElementById('inputGeminiKey').value.trim();
+  const guardian = document.getElementById('inputGuardianKey').value.trim();
+  const errEl    = document.getElementById('setupError');
+
+  errEl.classList.remove('visible');
+
+  if (!gemini || gemini.length < 10) {
+    errEl.textContent = 'Please enter your Gemini API key.';
+    errEl.classList.add('visible');
+    return;
+  }
+  if (!guardian || guardian.length < 10) {
+    errEl.textContent = 'Please enter your Guardian API key.';
+    errEl.classList.add('visible');
+    return;
+  }
+
+  localStorage.setItem('ee_gemini_key',   gemini);
+  localStorage.setItem('ee_guardian_key', guardian);
+
+  document.getElementById('setupScreen').classList.remove('visible');
+  startGame();
+}
+
+function openSetup() {
+  const k = getKeys();
+  if (k.gemini)   document.getElementById('inputGeminiKey').value   = k.gemini;
+  if (k.guardian) document.getElementById('inputGuardianKey').value = k.guardian;
+  document.getElementById('setupScreen').classList.add('visible');
+}
+
+// ══════════════════════════════════════
+// GAME STATE
+// ══════════════════════════════════════
 let currentArticle = null;
 let totalScore = 0;
 let gamesPlayed = 0;
 let streak = 0;
 let history = [];
 let isSubmitting = false;
-
-// ========== INIT ==========
-function init() {
-  loadState();
-  loadArticle();
-  updateUI();
-  
-  document.getElementById('headlineInput').addEventListener('input', function() {
-    const len = this.value.length;
-    const cc = document.getElementById('charCount');
-    cc.textContent = len + ' / 140';
-    cc.className = 'char-count' + (len > 120 ? ' warn' : '');
-  });
-}
+let articleLoaded = false;
 
 function loadState() {
   try {
     const saved = localStorage.getItem('extraExtra');
     if (saved) {
       const s = JSON.parse(saved);
-      totalScore = s.totalScore || 0;
+      totalScore  = s.totalScore  || 0;
       gamesPlayed = s.gamesPlayed || 0;
-      streak = s.streak || 0;
-      history = s.history || [];
+      streak      = s.streak      || 0;
+      history     = s.history     || [];
     }
   } catch(e) {}
 }
 
 function saveState() {
   try {
-    localStorage.setItem('extraExtra', JSON.stringify({
-      totalScore, gamesPlayed, streak, history
-    }));
+    localStorage.setItem('extraExtra', JSON.stringify({ totalScore, gamesPlayed, streak, history }));
   } catch(e) {}
 }
 
-function loadArticle() {
-  const unused = ARTICLES.filter(a => !history.some(h => h.articleId === a.id));
-  const pool = unused.length > 0 ? unused : ARTICLES;
-  currentArticle = pool[Math.floor(Math.random() * pool.length)];
-  
-  document.getElementById('synopsis').textContent = currentArticle.synopsis;
-  document.getElementById('articleSource').textContent = `Source: ${currentArticle.source} · Published: ${currentArticle.date}`;
-  document.getElementById('articleDate').textContent = currentArticle.date;
-  document.getElementById('realHeadline').textContent = currentArticle.realHeadline;
-  document.getElementById('realHeadline').classList.remove('visible');
-  
-  // Reset UI
-  document.getElementById('headlineInput').value = '';
-  document.getElementById('charCount').textContent = '0 / 140';
-  document.getElementById('resultCard').classList.remove('visible');
-  document.getElementById('loadingState').classList.remove('visible');
-  document.getElementById('errorMsg').classList.remove('visible');
-  document.getElementById('submitBtn').disabled = false;
+function todayKey() {
+  return new Date().toISOString().slice(0, 10);
 }
 
-function updateUI() {
-  document.getElementById('totalScore').textContent = totalScore.toLocaleString();
-  document.getElementById('gamesPlayed').textContent = gamesPlayed;
-  document.getElementById('streak').textContent = streak;
-  
-  const list = document.getElementById('historyList');
-  if (history.length === 0) {
-    list.innerHTML = '<div class="empty-history">No headlines yet — start writing!</div>';
+function hasPlayedToday() {
+  return history.some(h => h.date === todayKey());
+}
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+function init() {
+  if (!keysExist()) {
+    document.getElementById('setupScreen').classList.add('visible');
     return;
   }
-  
-  list.innerHTML = history.slice(-5).reverse().map(h => `
-    <div class="history-item">
-      <span class="hist-rank">${h.emoji}</span>
-      <div class="hist-headline">"${h.headline.substring(0,60)}${h.headline.length > 60 ? '...' : ''}"</div>
-      <span class="hist-score">${h.score}</span>
-    </div>
-  `).join('');
+  startGame();
 }
 
-// ========== RANKING TIERS ==========
+function startGame() {
+  loadState();
+  updateUI();
+  fetchDailyArticle();
+  startCountdown();
+
+  document.getElementById('headlineInput').addEventListener('input', function() {
+    const len = this.value.length;
+    const cc  = document.getElementById('charCount');
+    cc.textContent = len + ' / 140';
+    cc.className   = 'char-count' + (len > 120 ? ' warn' : '');
+  });
+}
+
+// ══════════════════════════════════════
+// FETCH DAILY ARTICLE — calls Guardian
+// then Gemini to summarize, cached by date
+// ══════════════════════════════════════
+async function fetchDailyArticle() {
+  // Check cache first
+  try {
+    const cached = JSON.parse(localStorage.getItem('ee_article_cache') || '{}');
+    if (cached.date === todayKey() && cached.article) {
+      currentArticle = cached.article;
+      displayArticle(cached.article);
+      return;
+    }
+  } catch(e) {}
+
+  try {
+    const article = await fetchAndSummarize();
+    // Cache for today
+    localStorage.setItem('ee_article_cache', JSON.stringify({ date: todayKey(), article }));
+    currentArticle = article;
+    displayArticle(article);
+  } catch(e) {
+    showFallbackArticle('Could not load today\'s story: ' + e.message);
+  }
+}
+
+async function fetchAndSummarize() {
+  const { guardian, gemini } = getKeys();
+  const today = todayKey();
+
+  // 1. Fetch from Guardian
+  const guardianUrl = 'https://content.guardianapis.com/search?' + new URLSearchParams({
+    'api-key':     guardian,
+    'section':     'world|us-news|politics|technology|science',
+    'show-fields': 'trailText,bodyText,headline,shortUrl',
+    'order-by':    'relevance',
+    'page-size':   '10',
+    'from-date':   today,
+    'to-date':     today,
+    'lang':        'en',
+  });
+
+  let results;
+  const gRes = await fetch(guardianUrl);
+  if (!gRes.ok) throw new Error('Guardian error ' + gRes.status + '. Check your Guardian API key.');
+  const gData = await gRes.json();
+  results = gData?.response?.results || [];
+
+  // Fallback to yesterday if no results today
+  if (results.length === 0) {
+    const yd = new Date();
+    yd.setDate(yd.getDate() - 1);
+    const ydStr = yd.toISOString().slice(0, 10);
+    const ydUrl = 'https://content.guardianapis.com/search?' + new URLSearchParams({
+      'api-key':     guardian,
+      'section':     'world|us-news|politics|technology|science',
+      'show-fields': 'trailText,bodyText,headline,shortUrl',
+      'order-by':    'relevance',
+      'page-size':   '10',
+      'from-date':   ydStr,
+      'to-date':     ydStr,
+      'lang':        'en',
+    });
+    const ydRes  = await fetch(ydUrl);
+    const ydData = await ydRes.json();
+    results = ydData?.response?.results || [];
+  }
+
+  if (results.length === 0) throw new Error('No articles found from Guardian.');
+
+  const pick = results.find(r => r.fields?.bodyText?.length > 200) || results[0];
+  const rawText     = (pick.fields?.bodyText || pick.fields?.trailText || '').slice(0, 3000);
+  const realHeadline = pick.fields?.headline || pick.webTitle || '';
+  const publishedDate = (pick.webPublicationDate || today).slice(0, 10);
+
+  // 2. Ask Gemini to summarize
+  const prompt = `You are a news editor preparing a daily headline-writing game.
+
+Here is a real news article:
+
+HEADLINE: ${realHeadline}
+BODY: ${rawText}
+
+Your job:
+1. Write a neutral, informative SYNOPSIS of 3-4 sentences that tells players what happened — enough to write a headline — but does NOT reveal the real headline's exact wording.
+2. Extract 8-10 relevant KEYWORDS (lowercase, single words or short phrases).
+
+Respond ONLY with valid JSON, no markdown fences:
+{"synopsis":"...","keywords":["word1","word2"],"publishedDate":"${publishedDate}"}`;
+
+  const gemRes = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${gemini}`,
+    {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.4, maxOutputTokens: 800 },
+      }),
+    }
+  );
+
+  if (!gemRes.ok) throw new Error('Gemini error ' + gemRes.status + '. Check your Gemini API key.');
+  const gemData = await gemRes.json();
+  const rawReply = gemData?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  const clean    = rawReply.replace(/```json|```/g, '').trim();
+
+  let parsed;
+  try { parsed = JSON.parse(clean); }
+  catch {
+    const m = clean.match(/\{[\s\S]*\}/);
+    if (m) parsed = JSON.parse(m[0]);
+    else throw new Error('Could not parse Gemini summary response.');
+  }
+
+  return {
+    id:           pick.id || today,
+    date:         parsed.publishedDate || publishedDate,
+    source:       'The Guardian',
+    synopsis:     parsed.synopsis,
+    realHeadline: realHeadline,
+    keywords:     parsed.keywords || [],
+    url:          pick.webUrl || '',
+  };
+}
+
+function showFallbackArticle(errMsg) {
+  currentArticle = {
+    id: 'error', date: todayKey(), source: 'Setup Required',
+    synopsis: 'Your API keys may be missing or incorrect. Tap ⚙️ below to update them. Once set, a real news story will load automatically every day.',
+    realHeadline: 'API Keys Required to Load Live News',
+    keywords: [], url: '',
+  };
+  displayArticle(currentArticle);
+  showError(errMsg);
+}
+
+function displayArticle(article) {
+  document.getElementById('skeletonLoader').style.display = 'none';
+  const d       = new Date(article.date + 'T12:00:00Z');
+  const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  document.getElementById('articleDate').textContent       = dateStr;
+  document.getElementById('mastheadDate').textContent      = dateStr + ' · Daily Edition';
+  document.getElementById('synopsis').textContent          = article.synopsis;
+  document.getElementById('synopsis').style.display        = 'block';
+  document.getElementById('articleSource').textContent     = 'Source: ' + article.source + ' · ' + dateStr;
+  document.getElementById('articleSource').style.display   = 'block';
+  document.getElementById('dailyBadge').style.display      = 'inline-flex';
+  document.getElementById('realHeadline').textContent      = article.realHeadline;
+  if (article.url) {
+    const lnk   = document.getElementById('articleLink');
+    lnk.href    = article.url;
+    lnk.style.display = 'inline-block';
+  }
+  articleLoaded = true;
+  if (hasPlayedToday()) showAlreadyPlayed();
+}
+
+// ══════════════════════════════════════
+// ALREADY PLAYED
+// ══════════════════════════════════════
+function showAlreadyPlayed() {
+  document.getElementById('playedToday').classList.add('visible');
+  document.getElementById('inputSection').style.display = 'none';
+  const todayEntry = history.find(h => h.date === todayKey());
+  if (todayEntry) displayStoredResult(todayEntry);
+}
+
+function displayStoredResult(entry) {
+  const rank = getRank(entry.score);
+  document.getElementById('rankEmoji').textContent    = rank.emoji;
+  document.getElementById('rankTitle').textContent    = rank.title;
+  document.getElementById('rankTitle').className      = 'tier-' + rank.tier;
+  document.getElementById('roundScore').textContent   = entry.score;
+  document.getElementById('verdictText').textContent  = entry.verdict ? '"' + entry.verdict + '"' : '"Come back tomorrow!"';
+  document.getElementById('realHeadlineReveal').textContent = currentArticle?.realHeadline || entry.realHeadline || '';
+  setBar('barClarity',  'valClarity',  entry.clarity     || 0, 25);
+  setBar('barAccuracy', 'valAccuracy', entry.accuracy    || 0, 25);
+  setBar('barHook',     'valHook',     entry.hook        || 0, 25);
+  setBar('barOriginal', 'valOriginal', entry.originality || 0, 25);
+  document.getElementById('resultCard').classList.add('visible');
+  document.getElementById('realHeadline').classList.add('visible');
+}
+
+// ══════════════════════════════════════
+// RANKING
+// ══════════════════════════════════════
 function getRank(score) {
-  if (score >= 90) return { emoji: '🏆', title: 'Pulitzer Contender', tier: 'pulitzer', label: 'LEGENDARY' };
-  if (score >= 75) return { emoji: '⭐', title: 'Senior Editor', tier: 'editor', label: 'EXCELLENT' };
-  if (score >= 60) return { emoji: '📰', title: 'Staff Reporter', tier: 'byline', label: 'SOLID WORK' };
-  if (score >= 45) return { emoji: '✏️', title: 'Junior Writer', tier: 'copy', label: 'DEVELOPING' };
-  if (score >= 25) return { emoji: '📋', title: 'Copy Editor', tier: 'copy', label: 'KEEP TRYING' };
-  return { emoji: '🗑️', title: 'Intern (Day 1)', tier: 'intern', label: 'NEEDS WORK' };
+  if (score >= 90) return { emoji: '🏆', title: 'Pulitzer Contender', tier: 'pulitzer' };
+  if (score >= 75) return { emoji: '⭐', title: 'Senior Editor',      tier: 'editor'   };
+  if (score >= 60) return { emoji: '📰', title: 'Staff Reporter',     tier: 'byline'   };
+  if (score >= 45) return { emoji: '✏️',  title: 'Junior Writer',      tier: 'copy'     };
+  if (score >= 25) return { emoji: '📋', title: 'Copy Editor',        tier: 'copy'     };
+  return               { emoji: '🗑️', title: 'Intern (Day 1)',      tier: 'intern'   };
 }
 
-// ========== SUBMIT ==========
+// ══════════════════════════════════════
+// SUBMIT & JUDGE
+// ══════════════════════════════════════
 async function submitHeadline() {
-  if (isSubmitting) return;
+  if (isSubmitting || !articleLoaded) return;
   const input = document.getElementById('headlineInput').value.trim();
-  
-  if (!input || input.length < 5) {
-    showError('Please write a headline of at least 5 characters!');
-    return;
-  }
-  
+  if (!input || input.length < 5) { showError('Please write a headline of at least 5 characters!'); return; }
+
   isSubmitting = true;
   document.getElementById('submitBtn').disabled = true;
   document.getElementById('errorMsg').classList.remove('visible');
-  
-  const loading = document.getElementById('loadingState');
-  loading.classList.add('visible');
-  
-  const loadingTexts = [
-    'THE EDITOR IS READING...',
-    'CHECKING YOUR SOURCES...',
-    'RUNNING ORIGINALITY CHECK...',
-    'CALCULATING YOUR SCORE...'
-  ];
+  document.getElementById('loadingState').classList.add('visible');
+
+  const texts = ['THE EDITOR IS READING...', 'CHECKING YOUR SOURCES...', 'RUNNING ORIGINALITY CHECK...', 'CALCULATING YOUR SCORE...'];
   let li = 0;
   const lt = setInterval(() => {
-    li = (li + 1) % loadingTexts.length;
-    document.getElementById('loadingText').textContent = loadingTexts[li];
+    li = (li + 1) % texts.length;
+    document.getElementById('loadingText').textContent = texts[li];
   }, 1200);
-  
+
   try {
-    const result = await judgeHeadline(input, currentArticle);
+    const result = await judgeHeadline(input);
     clearInterval(lt);
-    loading.classList.remove('visible');
+    document.getElementById('loadingState').classList.remove('visible');
     displayResult(result, input);
   } catch(e) {
     clearInterval(lt);
-    loading.classList.remove('visible');
-    showError('The editor is unavailable. Try again! (' + e.message + ')');
+    document.getElementById('loadingState').classList.remove('visible');
+    showError('The editor is unavailable: ' + e.message);
     document.getElementById('submitBtn').disabled = false;
     isSubmitting = false;
   }
 }
 
-async function judgeHeadline(headline, article) {
-  const prompt = `You are a seasoned newspaper editor judging a headline-writing game. 
+async function judgeHeadline(headline) {
+  const { gemini } = getKeys();
 
-THE NEWS STORY:
-${article.synopsis}
+  const prompt = `You are a seasoned newspaper editor judging a headline-writing game.
+
+THE NEWS STORY SYNOPSIS:
+${currentArticle.synopsis}
 
 THE REAL PUBLISHED HEADLINE:
-"${article.realHeadline}"
+"${currentArticle.realHeadline}"
 
 THE PLAYER'S HEADLINE:
 "${headline}"
 
-Judge this headline on four criteria (each out of 25 points, total 100):
-1. CLARITY (0-25): Is it clear, readable, and grammatically sound?
-2. ACCURACY (0-25): Does it accurately reflect the story facts?
-3. HOOK (0-25): Is it engaging, punchy, and would make someone want to read more?
-4. ORIGINALITY (0-25): Is it creative and different from the real headline? Penalize if it's nearly identical to or just paraphrases the real headline word-for-word.
+Score on four criteria (0-25 each, total 100):
+1. CLARITY (0-25): Clear, concise, grammatically correct?
+2. ACCURACY (0-25): Reflects the key facts correctly?
+3. HOOK (0-25): Punchy and attention-grabbing?
+4. ORIGINALITY (0-25): Creative and different from the real headline? If >70% similar in wording to the real headline, cap originality at 5.
 
-Also check: Does this headline seem copied or plagiarized from the real headline? If similarity > 80%, set originality to 0-5.
+Be fair — a mediocre headline should score 40-55. Don't inflate.
 
-Respond ONLY with this exact JSON (no markdown, no explanation):
-{"clarity":20,"accuracy":18,"hook":15,"originality":22,"verdict":"One or two sentences of editorial feedback in a witty, encouraging newspaper editor voice.","totalScore":75}`;
+Respond ONLY with valid JSON, no markdown:
+{"clarity":20,"accuracy":18,"hook":15,"originality":22,"verdict":"Witty one-sentence editorial feedback referencing something specific about their headline.","totalScore":75}`;
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      messages: [{ role: 'user', content: prompt }]
-    })
-  });
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${gemini}`,
+    {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.5, maxOutputTokens: 400 },
+      }),
+    }
+  );
 
-  if (!response.ok) throw new Error('API error: ' + response.status);
-  
-  const data = await response.json();
-  const text = data.content.map(c => c.text || '').join('').trim();
-  const clean = text.replace(/```json|```/g, '').trim();
-  
+  if (!res.ok) throw new Error('Gemini error ' + res.status + '. Check your Gemini API key in ⚙️ settings.');
+  const data     = await res.json();
+  const rawReply = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  const clean    = rawReply.replace(/```json|```/g, '').trim();
+
   let parsed;
-  try {
-    parsed = JSON.parse(clean);
-  } catch(e) {
-    // Try extracting JSON
-    const match = clean.match(/\{[\s\S]*\}/);
-    if (match) parsed = JSON.parse(match[0]);
-    else throw new Error('Could not parse AI response');
+  try { parsed = JSON.parse(clean); }
+  catch {
+    const m = clean.match(/\{[\s\S]*\}/);
+    if (m) parsed = JSON.parse(m[0]);
+    else throw new Error('Could not parse AI response.');
   }
-  
-  // Validate and clamp
-  parsed.clarity = Math.min(25, Math.max(0, parseInt(parsed.clarity) || 0));
-  parsed.accuracy = Math.min(25, Math.max(0, parseInt(parsed.accuracy) || 0));
-  parsed.hook = Math.min(25, Math.max(0, parseInt(parsed.hook) || 0));
+
+  parsed.clarity     = Math.min(25, Math.max(0, parseInt(parsed.clarity)     || 0));
+  parsed.accuracy    = Math.min(25, Math.max(0, parseInt(parsed.accuracy)    || 0));
+  parsed.hook        = Math.min(25, Math.max(0, parseInt(parsed.hook)        || 0));
   parsed.originality = Math.min(25, Math.max(0, parseInt(parsed.originality) || 0));
-  parsed.totalScore = parsed.clarity + parsed.accuracy + parsed.hook + parsed.originality;
-  
+  parsed.totalScore  = parsed.clarity + parsed.accuracy + parsed.hook + parsed.originality;
   return parsed;
 }
 
 function displayResult(result, userHeadline) {
   const score = result.totalScore;
-  const rank = getRank(score);
-  
-  // Update totals
+  const rank  = getRank(score);
+
   totalScore += score;
   gamesPlayed++;
-  if (score >= 60) streak++;
-  else streak = 0;
-  
+  streak = score >= 60 ? streak + 1 : 0;
+
   history.push({
-    articleId: currentArticle.id,
-    headline: userHeadline,
-    score: score,
-    emoji: rank.emoji
+    date: todayKey(), articleId: currentArticle.id,
+    realHeadline: currentArticle.realHeadline,
+    headline: userHeadline, score,
+    emoji: rank.emoji, verdict: result.verdict,
+    clarity: result.clarity, accuracy: result.accuracy,
+    hook: result.hook, originality: result.originality,
   });
-  
+
   saveState();
   updateUI();
-  
-  // Populate result card
-  document.getElementById('rankEmoji').textContent = rank.emoji;
-  document.getElementById('rankTitle').textContent = rank.title;
-  document.getElementById('rankTitle').className = 'tier-' + rank.tier;
-  document.getElementById('roundScore').textContent = score;
+
+  document.getElementById('rankEmoji').textContent   = rank.emoji;
+  document.getElementById('rankTitle').textContent   = rank.title;
+  document.getElementById('rankTitle').className     = 'tier-' + rank.tier;
+  document.getElementById('roundScore').textContent  = score;
   document.getElementById('verdictText').textContent = '"' + result.verdict + '"';
   document.getElementById('realHeadlineReveal').textContent = currentArticle.realHeadline;
-  
-  // Animate bars
+
   setTimeout(() => {
-    setBar('barClarity', 'valClarity', result.clarity, 25);
-    setBar('barAccuracy', 'valAccuracy', result.accuracy, 25);
-    setBar('barHook', 'valHook', result.hook, 25);
+    setBar('barClarity',  'valClarity',  result.clarity,     25);
+    setBar('barAccuracy', 'valAccuracy', result.accuracy,    25);
+    setBar('barHook',     'valHook',     result.hook,        25);
     setBar('barOriginal', 'valOriginal', result.originality, 25);
   }, 100);
-  
+
   document.getElementById('resultCard').classList.add('visible');
   document.getElementById('realHeadline').classList.add('visible');
-  
-  // Points flash
+  document.getElementById('inputSection').style.display = 'none';
+
   if (score >= 60) {
     const flash = document.createElement('div');
-    flash.className = 'points-flash';
+    flash.className   = 'points-flash';
     flash.textContent = '+' + score;
     document.body.appendChild(flash);
     setTimeout(() => flash.remove(), 1600);
   }
-  
+
   isSubmitting = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// ══════════════════════════════════════
+// UI HELPERS
+// ══════════════════════════════════════
 function setBar(barId, valId, value, max) {
   const pct = Math.round((value / max) * 100);
-  const bar = document.getElementById(barId);
+  const bar  = document.getElementById(barId);
   bar.style.width = pct + '%';
-  bar.className = 'metric-fill ' + (pct >= 70 ? 'high' : pct >= 40 ? 'med' : 'low');
+  bar.className   = 'metric-fill ' + (pct >= 70 ? 'high' : pct >= 40 ? 'med' : 'low');
   document.getElementById(valId).textContent = value;
+}
+
+function updateUI() {
+  document.getElementById('totalScore').textContent  = totalScore.toLocaleString();
+  document.getElementById('gamesPlayed').textContent = gamesPlayed;
+  document.getElementById('streak').textContent      = streak;
+
+  const list = document.getElementById('historyList');
+  if (history.length === 0) {
+    list.innerHTML = '<div class="empty-history">No headlines yet — start writing!</div>';
+    return;
+  }
+  list.innerHTML = history.slice(-5).reverse().map(h => `
+    <div class="history-item">
+      <span class="hist-rank">${h.emoji}</span>
+      <div class="hist-headline">"${h.headline.substring(0,60)}${h.headline.length > 60 ? '...' : ''}"</div>
+      <span class="hist-score">${h.score}</span>
+    </div>`).join('');
 }
 
 function showError(msg) {
@@ -983,21 +923,29 @@ function showError(msg) {
   e.classList.add('visible');
 }
 
-function nextRound() {
-  loadArticle();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function shareScore() {
+  const entry = history.find(h => h.date === todayKey());
+  if (!entry) return;
+  const rank = getRank(entry.score);
+  const text = `🗞️ Extra Extra — Daily Headline Game\n${rank.emoji} ${rank.title}\nScore: ${entry.score}/100\nClarity ${entry.clarity} · Accuracy ${entry.accuracy} · Hook ${entry.hook} · Originality ${entry.originality}\n\nCan you beat me today?`;
+  if (navigator.share) navigator.share({ title: 'Extra Extra', text });
+  else if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard!'));
+  else alert(text);
 }
 
-function shareScore() {
-  const rank = getRank(totalScore / Math.max(gamesPlayed, 1));
-  const text = `🗞️ Extra Extra\n${rank.emoji} ${rank.title}\n⭐ ${totalScore} total pts | ${gamesPlayed} games | 🔥 ${streak} streak\nCan you beat my score?`;
-  if (navigator.share) {
-    navigator.share({ title: 'Extra Extra', text });
-  } else if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => alert('Score copied to clipboard!'));
-  } else {
-    alert(text);
+function startCountdown() {
+  function tick() {
+    const now      = new Date();
+    const midnight = new Date(); midnight.setHours(24, 0, 0, 0);
+    const diff = midnight - now;
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const el = document.getElementById('countdown');
+    if (el) el.innerHTML = `Next story in <span>${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</span>`;
   }
+  tick();
+  setInterval(tick, 1000);
 }
 
 init();
